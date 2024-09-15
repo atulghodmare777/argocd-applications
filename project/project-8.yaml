@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project-10
+  namespace: argocd
+  resourceVersion: "708"
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+  roles:
+    - name: read-sync # name of the role
+      description: "this role can be used to reading and syncing the application"
+      policies:
+        - p, proj:project-10:read-sync, applications, get, project-10/*, allow
+        - p, proj:project-10:read-sync, applications, sync, project-10/*, allow  

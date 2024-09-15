@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: private1-app-using-template
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/atulghodmare777/argocd-applications.git"
+    path: helm/nginx
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: shared
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResources=true
+    automated: {}

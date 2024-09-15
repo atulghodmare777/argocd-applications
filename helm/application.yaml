@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mattermost-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/atulghodmare777/argocd-applications.git
+    path: helm/mattermost/mattermost-team-edition
+    targetRevision: HEAD
+    helm:
+      values: |
+        externalDatabase:
+          enabled: false
+        postgresql:
+          enabled: true
+          postgresqlPassword: mypassword123
+        service:
+          type: LoadBalancer
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mattermost
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project-7
+  namespace: argocd
+  resourceVersion: "708"
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+  roles:
+    - name: read-only # name of the role
+      description: "this role can be used to reading the applications"
+      policies:
+        - p, proj:project-8:read-only, applications, get, project-8/*, allow
+          # in place of * we can use the application name as well, * means all the app
