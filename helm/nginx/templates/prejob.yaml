@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: health-check-pre-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: health-check
+          image: curlimage/curl
+          command: ["/bin/sh", "-c"]
+          arg: ["if curl -s http://192.168.208.253:8065 | grep -qa 'mattermost'; then echo 'mattermost is up and running'; exit 0; else echo 'Mattermost is not ACCISSIBLE'; exit 1; fi"]
+      restartPolicy: Never
+      backoffLimit: 0
+      
